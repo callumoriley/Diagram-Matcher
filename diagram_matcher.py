@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import filedialog
 from PIL import Image, ImageTk
 
 img = None
@@ -6,8 +7,10 @@ img = None
 MARGIN = 100 # can be this many pixels away from the correct position in any direction
 HORIZONTAL_PADDING = 300
 VERTICAL_PADDING = 100
-FILE_NAME = "save_image"
-SPACING_BETWEEN_IMAGES = 100
+FILE_NAME = filedialog.askopenfilename(
+        title="Select image",
+        filetypes=[("PNG files", "*.png")])[:-4]
+SPACING_BETWEEN_IMAGES = 30
 
 class Match:
     # coords, dimensions, and home_coords are all tuples of (x, y) coordinates
@@ -47,7 +50,7 @@ class DiagramMatcher:
         global img
         
         self.root = root
-        self.root.title("Drag and Drop Matching")
+        self.root.title("Diagram Drag and Drop Matching")
 
         self.im = Image.open(FILE_NAME+".png")
         width, height = self.im.size

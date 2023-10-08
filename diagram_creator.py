@@ -1,8 +1,12 @@
 import tkinter as tk
+from tkinter import filedialog
 from PIL import Image, ImageTk, ImageDraw
 
-IMAGE_FILE_NAME = "image.png"
-SAVE_NAME = "save_image"
+IMAGE_FILE_NAME = filedialog.askopenfilename(
+        title="Select image",
+        filetypes=[("PNG files", "*.png")])
+parts = IMAGE_FILE_NAME[:-4].rsplit("/", 1)
+SAVE_NAME = parts[0]+"/save_"+parts[1]
 IMAGE_SCALE_FACTOR = 0.5
 RECTANGLE_THICKNESS = 4
 
@@ -55,6 +59,7 @@ class ImageCreator:
 
     def close_window(self, e):
         lines = [",".join([str(e) for e in line])+"\n" for line in self.points]
+        # maybe open a save file dialog window for this operation so that you can choose the file names without editing the code
         with open(SAVE_NAME+".csv", "w") as f:
             f.writelines(lines)
 
